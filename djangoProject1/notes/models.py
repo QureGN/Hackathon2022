@@ -1,8 +1,9 @@
 from django.db import models
+from django_filters import rest_framework as filters
 
 
 class Years(models.Model):
-    Count = models.IntegerField
+    Count = models.IntegerField()
     class Meta:
         managed = False
         db_table = 'Years'
@@ -33,9 +34,9 @@ class Subjects(models.Model):
 class Notes(models.Model):
     Type = models.CharField(max_length=25)
     User = models.ForeignKey(Users, on_delete=models.CASCADE)
-    Deadline = models.DateField
-    Personal_Deadline = models.DateField
-    Passed = models.BooleanField
+    Deadline = models.DateField()
+    Personal_Deadline = models.DateField()
+    Passed = models.BooleanField()
     Text = models.CharField(max_length=200)
     class Meta:
         managed = False
@@ -47,5 +48,27 @@ class Sub_Notes(models.Model):
     class Meta:
         managed = False
         db_table = 'Sub_Notes'
+
+
+class CharFilterInFilter(filters.BaseInFilter, filters.NumberFilter):
+    pass
+
+class SubjectFilter(filters.FilterSet):
+    Dep = CharFilterInFilter(field_name ='Dep', lookup_expr ='in')
+
+    Year = CharFilterInFilter(field_name ='Year', lookup_expr ='in')
+
+    class Meta:
+        model: Subjects
+        fields = ['Dep', 'Year']
+
+class NoteFilter(filters.FilterSet):
+    User = CharFilterInFilter(field_name ='User', lookup_expr ='in')
+
+
+    class Meta:
+        model: Users
+        fields = ['User']
+
 
 # Create your models here.

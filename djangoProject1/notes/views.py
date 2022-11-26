@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.shortcuts import render
 from rest_framework import viewsets
 from notes.serializers import UsersSerializer,SubjectsSerializer, DepartmentsSerializer, YearsSerializer, NotesSerializer, Sub_NotesSerializer
-from notes.models import Users, Subjects, Departments, Years, Sub_Notes, Notes
+from notes.models import Users, Subjects, Departments, Years, Sub_Notes, Notes, SubjectFilter, NoteFilter
 from django_filters.rest_framework import DjangoFilterBackend
 
 class UsersViewSet(viewsets.ModelViewSet):
@@ -20,6 +20,9 @@ class SubjectsViewSet(viewsets.ModelViewSet):
     # queryset всех пользователей для фильтрации по дате последнего изменения
     queryset = Subjects.objects.all().order_by('pk')
     serializer_class = SubjectsSerializer
+    filter_backends = (DjangoFilterBackend,)
+    filterset_class = SubjectFilter
+
 
 class DepartmentsViewSet(viewsets.ModelViewSet):
     """
@@ -35,8 +38,11 @@ class NotesViewSet(viewsets.ModelViewSet):
         API endpoint, который позволяет просматривать и редактировать акции компаний
         """
         # queryset всех пользователей для фильтрации по дате последнего изменения
+
         queryset = Notes.objects.all().order_by('pk')
         serializer_class = NotesSerializer
+        filter_backends = (DjangoFilterBackend,)
+        filterset_class = NoteFilter
 
 
 class Sub_NotesViewSet(viewsets.ModelViewSet):

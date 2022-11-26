@@ -1,5 +1,6 @@
-from bmstu.models import Years, Departments, Users, Subjects, Notes, Sub_Notes
+from notes.models import Years, Departments, Users, Subjects, Notes, Sub_Notes
 from rest_framework import serializers
+from django_filters.rest_framework import DjangoFilterBackend
 
 
 class YearsSerializer(serializers.ModelSerializer):
@@ -40,3 +41,5 @@ class Sub_NotesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Sub_Notes
         fields = ["pk", "Notes", "User", "Sub"]
+
+
