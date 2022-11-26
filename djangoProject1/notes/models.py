@@ -1,8 +1,6 @@
 from django.db import models
 
 
-
-
 class Years(models.Model):
     Count = models.IntegerField
     class Meta:
@@ -49,7 +47,5 @@ class Sub_Notes(models.Model):
     class Meta:
         managed = False
         db_table = 'Sub_Notes'
-# Create your models here.
-
 
 # Create your models here.
